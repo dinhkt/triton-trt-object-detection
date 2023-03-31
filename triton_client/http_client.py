@@ -23,6 +23,7 @@ if __name__ == "__main__":
     if opt.model=="yolov5":
         model_name="yolov5_trt"
         input_name="images"
+        input_shape=(640,640)
         output_name="output0"
         with open("labels/yolo_coco_labels.txt","r") as f:
             lines=f.readlines()
@@ -41,13 +42,13 @@ if __name__ == "__main__":
     fps = cap.get(cv2.CAP_PROP_FPS)
     if opt.video_save_path:
         fourcc = cv2.VideoWriter_fourcc(*'mp4v') 
-        video=cv2.VideoWriter(opt.result_save_path,fourcc,fps,(width,height))
+        video=cv2.VideoWriter(opt.video_save_path,fourcc,fps,(width,height))
     while cap.isOpened():
         success,frame=cap.read()
         if not success:
             break
         start_time=time.time()
-        preprocessed_image,rs_image = input_preprocess(frame,opt.model)
+        preprocessed_image,rs_image = input_preprocess(frame,input_shape)
         detection_input = httpclient.InferInput(
             "images", preprocessed_image.shape, datatype="FP32")
         detection_input.set_data_from_numpy(preprocessed_image, binary_data=True)
@@ -55,7 +56,8 @@ if __name__ == "__main__":
         detection_response = client.infer(
             model_name=model_name, inputs=[detection_input])
         frame=postprocess(rs_image,detection_response.as_numpy("output0"),labels,opt.model)
-        frame = cv2.resize(frame, (width, height))
+        resize_size=max(width,height)
+        frame = cv2.resize(frame, (resize_size, resize_size))
         if type=="stream":
             cv2.imshow("Detection",frame)
         if opt.video_save_path:

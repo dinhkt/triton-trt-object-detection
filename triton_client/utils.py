@@ -2,12 +2,6 @@ import cv2
 import numpy as np
 
 
-def input_preprocess(frame,model):
-    if model=="yolov5":
-        return yolo_preprocess(frame)
-    else:
-        print("not supported")
-
 def postprocess(img,output,labels,model):
     if model=="yolov5":
         return yolo_postprocess(img,output,labels)
@@ -51,8 +45,9 @@ def NMS(boxes, confThresh=0.25, overlapThresh=0.45):
     return boxes[pick]
 
 
-def yolo_preprocess(raw_bgr_image, input_shape=(640,640)):
+def input_preprocess(raw_bgr_image, input_shape=(640,640)):
     input_w, input_h = input_shape
+
     image_raw = raw_bgr_image
     h, w, c = image_raw.shape
     image = cv2.cvtColor(image_raw, cv2.COLOR_BGR2RGB)
@@ -77,6 +72,7 @@ def yolo_preprocess(raw_bgr_image, input_shape=(640,640)):
     image = cv2.copyMakeBorder(
         image, ty1, ty2, tx1, tx2, cv2.BORDER_CONSTANT, (128, 128, 128)
     )
+    cv2.imwrite("after.png",image)
     blob = image.astype(np.float32)
     # Normalize to [0,1]
     blob /= 255.0

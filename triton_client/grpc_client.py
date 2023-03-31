@@ -25,6 +25,7 @@ if __name__ == '__main__':
         model_name="yolov5_trt"
         model_version = "1"
         input_name="images"
+        input_shape=(640,640)
         output_name="output0"
         c,w,h=3,640,640
         with open("labels/yolo_coco_labels.txt","r") as f:
@@ -51,7 +52,7 @@ if __name__ == '__main__':
     fps = cap.get(cv2.CAP_PROP_FPS)
     if opt.video_save_path:
         fourcc = cv2.VideoWriter_fourcc(*'mp4v') 
-        video=cv2.VideoWriter(opt.result_save_path,fourcc,fps,(width,height))
+        video=cv2.VideoWriter(opt.video_save_path,fourcc,fps,(width,height))
     cur_id=0
     while cap.isOpened():
         success,frame=cap.read()
@@ -72,7 +73,7 @@ if __name__ == '__main__':
         input.shape.extend([1, c, w, h])
         request.inputs.extend([input])
 
-        preprocessed_image,rs_image = input_preprocess(frame,opt.model)
+        preprocessed_image,rs_image = input_preprocess(frame,input_shape)
         output = service_pb2.ModelInferRequest().InferRequestedOutputTensor()
         output.name = output_name
         request.outputs.extend([output])
@@ -80,7 +81,8 @@ if __name__ == '__main__':
 
         response = grpc_stub.ModelInfer(request)
         frame=postprocess(rs_image,InferResult(response).as_numpy(output_name),labels,opt.model)
-        frame = cv2.resize(frame, (width, height))
+        resize_size=max(width,height)
+        frame = cv2.resize(frame, (resize_size, resize_size))
         if type=="stream":
             cv2.imshow("Detection",frame)
         if opt.video_save_path:
