@@ -40,3 +40,7 @@ Input source can be image file, video file or stream ( url or ```0``` for your w
 Use ```--url``` to specify the URL of Triton inference server (default ```localhost:8000/8001``` for http/grpc service), ```--video_save_path``` to save the result video.
 
 ![Alt Text](https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExYmEyYWQ1MTNkMzRiODQ3NTM4MTI2OGNjOWFjNDU0MjFhZGQ0Njk2MCZjdD1n/cxnRUqlTZopXisDpff/giphy.gif)
+
+### Todo:
+- [x] Yolov5
+- [ ] Detection Transformer
