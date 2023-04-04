@@ -23,6 +23,22 @@ model_deploy/
 ```
 
 When generating the TRT engine, use the same TensorRT version as the TensorRT version of your Triton server that you will deploy the model. For example, my tensorrt version is 8.5.1.7, so I use ```nvcr.io/nvidia/tritonserver:22.12-py3``` for Triton server, according to https://docs.nvidia.com/deeplearning/triton-inference-server/release-notes/rel-22-12.html#rel-22-12
+
+#### Quantization results of Resnet50 (on NVIDIA RTX 3060):
+```
+Model         |   Inference Time   | Accuracy (Imagenet/val2017)
+-----------------------------------------------------------------
+pytorch(fp64) |   5.87ms           |   74.46%
+-----------------------------------------------------------------
+TRT (fp16)    |   0.74ms           |   72.14%
+-----------------------------------------------------------------
+TRT (int8)    |   0.43ms           |   72.34%
+-----------------------------------------------------------------
+```
+#### Quantization results of Yolov5:
+```
+```
+
 ### Run Triton server: 
 
 ```cd triton-trt-object-detection/```
