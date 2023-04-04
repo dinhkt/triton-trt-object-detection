@@ -13,7 +13,7 @@ To build the engine, go to ```build_quantized_engine/``` and execute:
 
 with ```path/to/sample/datasets``` is the path to the directory storing the sample images for INT8 calibration.
 
-Change to model name to ```model.plan```, create the config file and put in ```model_deloy/``` folder with following this structure:
+Change to engine name to ```model.plan```, create the config file and put in ```model_deloy/``` folder with following this structure:
 ```
 model_deploy/
     yolov5_trt/
@@ -22,7 +22,7 @@ model_deploy/
         config.pbtxt
 ```
 
-When generating the TRT engine, use the same TensorRT version as the TensorRT version of your Triton server that you will deploy the model. For example, my tensorrt version is 8.5.1.7, so I use ```nvcr.io/nvidia/tritonserver:22.08-py3``` for Triton server, according to https://docs.nvidia.com/deeplearning/triton-inference-server/release-notes/rel-22-12.html#rel-22-12
+When generating the TRT engine, use the same TensorRT version as the TensorRT version of your Triton server that you will deploy the model. For example, my tensorrt version is 8.5.1.7, so I use ```nvcr.io/nvidia/tritonserver:22.12-py3``` for Triton server, according to https://docs.nvidia.com/deeplearning/triton-inference-server/release-notes/rel-22-12.html#rel-22-12
 ### Run Triton server: 
 
 ```cd triton-trt-object-detection/```
