@@ -1,3 +1,4 @@
 server/
 model_store/
 triton_client/__pycache__/
+test_inference/*.trt
