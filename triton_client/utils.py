@@ -72,7 +72,6 @@ def input_preprocess(raw_bgr_image, input_shape=(640,640)):
     image = cv2.copyMakeBorder(
         image, ty1, ty2, tx1, tx2, cv2.BORDER_CONSTANT, (128, 128, 128)
     )
-    cv2.imwrite("after.png",image)
     blob = image.astype(np.float32)
     # Normalize to [0,1]
     blob /= 255.0
