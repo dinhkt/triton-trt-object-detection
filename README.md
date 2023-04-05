@@ -35,15 +35,13 @@ TRT (fp16)    |   0.74ms           |   72.14%
 TRT (int8)    |   0.43ms           |   72.34%
 -----------------------------------------------------------------
 ```
-#### Quantization results of ultralytics/yolov5 (on NVIDIA RTX 3060):
+#### Quantization results of ultralytics/yolov5s (on NVIDIA RTX 3060):
 ```
-Model         |   Inference Time   | mAP (COCO/val)
+Model         |   Inference Time   | mAP50 (COCO/val2017)
 -----------------------------------------------------------------
-pytorch(fp64) |   8.7ms            |   
+pytorch(fp64) |   8.7ms            |   56.8
 -----------------------------------------------------------------
-TRT (fp16)    |                    |   
------------------------------------------------------------------
-TRT (int8)    |   1.12ms           |   
+TRT (int8)    |   1.12ms           |   28.65
 -----------------------------------------------------------------
 ```
 
