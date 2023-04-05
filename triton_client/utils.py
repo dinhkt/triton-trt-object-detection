@@ -47,11 +47,9 @@ def NMS(boxes, confThresh=0.25, overlapThresh=0.45):
 
 def input_preprocess(raw_bgr_image, input_shape=(640,640)):
     input_w, input_h = input_shape
-
     image_raw = raw_bgr_image
     h, w, c = image_raw.shape
     image = cv2.cvtColor(image_raw, cv2.COLOR_BGR2RGB)
-    # Calculate widht and height and paddings
     r_w = input_w / w
     r_h = input_h / h
     if r_h > r_w:
@@ -66,16 +64,12 @@ def input_preprocess(raw_bgr_image, input_shape=(640,640)):
         tx1 = int((input_w - tw) / 2)
         tx2 = input_w - tw - tx1
         ty1 = ty2 = 0
-    # Resize the image with long side while maintaining ratio
     image = cv2.resize(image, (tw, th))
-    # Pad the short side with (128,128,128)
     image = cv2.copyMakeBorder(
         image, ty1, ty2, tx1, tx2, cv2.BORDER_CONSTANT, (128, 128, 128)
     )
     blob = image.astype(np.float32)
-    # Normalize to [0,1]
     blob /= 255.0
-    # HWC to CHW format:
     blob = np.transpose(blob, [2, 0, 1])
     return np.expand_dims(blob,0),image
 
