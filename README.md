@@ -26,6 +26,8 @@ When generating the TRT engine, use the same TensorRT version as the TensorRT ve
 
 #### (Example) Quantization results of Torchvision Resnet50 (on NVIDIA RTX 3060):
 ```
+Run python ./test_inference/test_resnet50_inference.py 
+
 Model         |   Inference Time   | Accuracy (Imagenet/val2017)
 -----------------------------------------------------------------
 pytorch(fp64) |   5.87ms           |   74.46%
@@ -37,6 +39,9 @@ TRT (int8)    |   0.43ms           |   72.34%
 ```
 #### Quantization results of ultralytics/yolov5s (on NVIDIA RTX 3060):
 ```
+Run python ./test_inference/test_yolov5_inference.py to generate the detection results and 
+run python mAP/main.py -na -np to compute the mAP 50
+
 Model         |   Inference Time   | mAP50 (COCO/val2017)
 -----------------------------------------------------------------
 pytorch(fp64) |   8.7ms            |   56.8
