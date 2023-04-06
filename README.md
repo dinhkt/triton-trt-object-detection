@@ -2,10 +2,10 @@
 Deployment of quantized TRT object detection models on Triton inference server
 
 ### Prepare the TRT engines 
-I use Post Training Quantization (PTQ) building script from https://github.com/NVIDIA/TensorRT/tree/main/samples/python/efficientdet, with some modifications to fit with TensorRT8 and change the preprocess function in INT8 calibrator for Yolo and Resnet models.
+The engine building code is based on https://github.com/NVIDIA/TensorRT/tree/main/samples/python/efficientdet, with modifications to fit with TensorRT8 and change the preprocess function in INT8 calibrator for Yolo and Resnet models.
 
 Prepare the ONNX models in advance. For example, ```yolov5s.onnx``` model can be exported by using ```export.py``` in ```ultralytics/yolov5```.
-To build the engine, go to ```build_quantized_engine/``` and execute:
+To build the engine and post-training-quantization (PTQ) model, go to ```build_quantized_engine/``` and execute:
 #### For FP16:
   ```python build_engine.py --onnx yolov5s.onnx --engine yolov5s_fp16.trt --precision fp16```
 #### For INT8:
